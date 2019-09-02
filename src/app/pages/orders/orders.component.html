@@ -1,0 +1,39 @@
+<div class="header">
+    <div class="list-line"></div>
+    <ul class="steps-list">
+        <li [ngClass]="{ 'li-current': step===1, 'li-past': step>1 }">PASO 1</li>
+        <li [ngClass]="{ 'li-current': step===2, 'li-past': step>2 }">PASO 2</li>
+        <li [ngClass]="{ 'li-current': step===3, 'li-past': step>3 }">PASO 3</li>
+        <li [ngClass]="{ 'li-current': step===4, 'li-past': step>4 }">PASO 4</li>
+        <li [ngClass]="{ 'li-current': step===5, 'li-past': step>5 }">PASO 5</li>
+        <li [ngClass]="{ 'li-current': step===6}">FINALIZADO</li>
+    </ul>
+    <button type="button" class="btn btn-secondary m-2" (click)="prevStep()" *ngIf="step>1">
+            Prev
+    </button>
+    <button type="button" class="btn btn-primary m-2" (click)="nextStep()">
+            Next
+    </button> 
+</div>
+<div class="container">
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="mt-5 mb-5">
+            <div *ngFor="let movie of movies" cdkDrag>
+                <div class="row box m-3">
+                    <img class="card-img-top img-size" [src]="movie.image" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">{{movie.name}}</h5>
+                      <p>{{movie.description}}</p>
+                      <p class="card-text">{{ movie.year}}</p>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  (click)="selectedMovie = movie">
+                            Edit
+                      </button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-modal [movie]="selectedMovie" (propagar)="procesaPropagar($event)"></app-modal>                       
+<!-- <div class="disponibility" [ngStyle]="{backgroundColor: getColor()}"
+    [ngClass]="{open: status === 'green'}"></div> -->
